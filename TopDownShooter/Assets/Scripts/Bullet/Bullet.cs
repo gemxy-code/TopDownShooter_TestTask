@@ -1,43 +1,34 @@
 using UnityEngine;
 
-//??
+//Relised for every bullet own behavior and inject to gun with ScriptableObject
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed = 2;
 
-    private Vector3 _startPoint;    
-    private float _damage;
-    private bool _isGrenade;
-    private float _explosionRadius;
-    private bool _isLimitedLife;
-    private float _timeLife;
+    private GunData _gunData;
     private Vector3 _target;
+    private Vector3 _startPoint;
 
-    public void Init(Vector3 startPoint,  float damage, bool isGrenade, float explosionRadius, bool isLimitedLife, float timeLife, Vector3 target)
+    public void Init(GunData data, Vector3 startPoint, Vector3 target)
     {
+        _gunData = data;
         _startPoint = startPoint;
-        _damage = damage;
-        _isGrenade = isGrenade;
-        _explosionRadius = explosionRadius;
-        _isLimitedLife = isLimitedLife; 
-        _timeLife = timeLife;
+        transform.position = _startPoint;
         _target = target;
 
-
-        transform.position = startPoint;
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        if (_isGrenade && transform.position == _target)
+        if (_gunData.IsGrenade && transform.position == _target)
         {
-            Collider[] collisions = Physics.OverlapSphere(transform.position, _explosionRadius);
+            Collider[] collisions = Physics.OverlapSphere(transform.position, _gunData.ExplosionRadius);
             foreach (Collider enemy in collisions)
-                enemy.GetComponent<TakeDamage>().TakedDamage(_damage);
+                enemy.GetComponent<TakeDamage>().TakedDamage(_gunData.Damage);
             PoolManager.Instance.ReturnObject(this.gameObject);
         }
-        else if (_isLimitedLife && Vector3.Distance(_startPoint, transform.position) >= _timeLife)
+        else if ((_gunData.IsLimitedLife && Vector3.Distance(_startPoint, transform.position) >= _gunData.TimeLife)||(transform.position.x > WorldLimit.MapBorders.x || transform.position.x < -WorldLimit.MapBorders.x || transform.position.z > WorldLimit.MapBorders.z || transform.position.z < -WorldLimit.MapBorders.z))
         {
             PoolManager.Instance.ReturnObject(this.gameObject);
         }
@@ -49,9 +40,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_isGrenade && other.TryGetComponent(out TakeDamage enemy))
+        if (!_gunData.IsGrenade && other.TryGetComponent(out TakeDamage enemy))
         {
-            enemy.TakedDamage(_damage);
+            enemy.TakedDamage(_gunData.Damage);
             PoolManager.Instance.ReturnObject(this.gameObject);
         }
     }

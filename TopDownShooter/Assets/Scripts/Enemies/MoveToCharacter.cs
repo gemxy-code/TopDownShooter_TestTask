@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoveToCharacter : MonoBehaviour
 {
-    [SerializeField] private EnemyScriptableObjects _enemyData;
+    [SerializeField] private EnemyData _enemyData;
 
     private GameObject _target;
 

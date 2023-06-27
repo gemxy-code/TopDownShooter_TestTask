@@ -60,7 +60,6 @@ public class PoolManager : MonoBehaviour
         {
             rentedObject = CreateNewObject(Object);
         }            
-        rentedObject.SetActive(true);
         return rentedObject;
     }
 

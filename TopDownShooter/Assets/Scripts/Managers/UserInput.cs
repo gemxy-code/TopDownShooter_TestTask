@@ -19,7 +19,9 @@ public class UserInput : MonoBehaviour
 
         if(Input.GetMouseButton(0))
         {
-            OnMouseClicked?.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
+            Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.y = 0f;
+            OnMouseClicked?.Invoke(mousePosition);
         }
     }
 }

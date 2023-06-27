@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TakeDamage : MonoBehaviour
 {
-    [SerializeField] private EnemyScriptableObjects _enemyData;
+    [SerializeField] private EnemyData _enemyData;
 
     private float _health;
 

@@ -3,16 +3,12 @@ using UnityEngine;
 
 public class EnemiesSpawner : MonoBehaviour
 {
-    [SerializeField] private EnemyScriptableObjects[] _enemiesDatas;
+    [SerializeField] private EnemyData[] _enemiesDatas;
     [SerializeField] private Camera _camera;
     [SerializeField] private float _spawnTimer;
 
     private float _minusTime = 0.1f;
     private float _timeForBoostTime = 10f;
-
-    private float _height; //        
-    private float _width;//
-
 
     private float _allChances = 0;
     private System.Random _rand = new System.Random();
@@ -51,14 +47,13 @@ public class EnemiesSpawner : MonoBehaviour
             {
                 GameObject enemy = PoolManager.Instance.RentObject(_enemiesDatas[i].Prefab);
                 enemy.transform.position = CalculatePosition();
+                enemy.SetActive(true);
             }
         }
     }
 
     private Vector3 CalculatePosition()
     {
-        _height = _camera.orthographicSize + 1;//
-        _width = _camera.orthographicSize * _camera.aspect + 1;//
         Vector3 position = new Vector3(_camera.transform.position.x, 0.5f, _camera.transform.position.z)  + new Vector3(Random.Range(WorldLimit.MapBorders.x * -1, WorldLimit.MapBorders.x), 0.5f, Random.Range(WorldLimit.MapBorders.z * -1, WorldLimit.MapBorders.z));
         return position;
     }
