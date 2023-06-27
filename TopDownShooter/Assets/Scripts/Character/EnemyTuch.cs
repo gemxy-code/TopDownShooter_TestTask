@@ -18,7 +18,7 @@ public class EnemyTuch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out GameObject Enemy))
+        if(other.TryGetComponent(out MoveToCharacter Enemy))
         {
             if(!_isInvulnerability)
             {

@@ -20,6 +20,5 @@ public class EnabledBonus : MonoBehaviour
     {
         yield return new WaitForSeconds(_bonusTimer);
         _enabledBonus.DisableBonus();
-        _enabledBonus = null;
     }
 }

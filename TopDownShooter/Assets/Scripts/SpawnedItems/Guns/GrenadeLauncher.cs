@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class GrenadeLauncher : MonoBehaviour, IShootable
+public class GrenadeLauncher : Gun
 {
-    public void Shoot()
+
+    public override void Shoot(Vector3 target)
     {
-        Debug.Log("я стрел€ю из гранатомЄта");
+
     }
 }

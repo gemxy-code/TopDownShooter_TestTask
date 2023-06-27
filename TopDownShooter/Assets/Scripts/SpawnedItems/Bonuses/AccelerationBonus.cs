@@ -10,6 +10,6 @@ public class AccelerationBonus : MonoBehaviour, IBonused
     }
     public void DisableBonus()
     {
-        EventBus.SendSpeedFalled();
+        EventBus.SendSpeedFalled(_boostSpeedValue);
     } 
 }

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533ae66f39a9873479f5f53b6bbaffcb, type: 3}
   m_Name: QuickEnemy
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 1613251755764988805, guid: 201c4b3f8d9e4bb4ca788d1ec0f95237, type: 3}
   _health: 10
   _speed: 4
   _score: 12
   _spawnChance: 30
+  Weight: 90

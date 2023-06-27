@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533ae66f39a9873479f5f53b6bbaffcb, type: 3}
   m_Name: ArmoredEnemy
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 7305854141183009449, guid: fc989bb4feebd8c4fb09448a32eae203, type: 3}
   _health: 50
   _speed: 2
   _score: 30
   _spawnChance: 10
+  Weight: 100

@@ -5,16 +5,28 @@ public class FadeAway : MonoBehaviour
 {
     [SerializeField] private float _timer = 5f;
 
-    private void OnEnable()
+    public void Start()
     {
-        StartCoroutine(TimerFadeAway());
+        StartCoroutine(nameof(TimerFadeAway));
     }
 
     private IEnumerator TimerFadeAway()
     {
         yield return new WaitForSeconds(_timer);
-        Spawner.TakBack(this.gameObject);
+        Fade();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        StopCoroutine(nameof(TimerFadeAway));
+        if (other.TryGetComponent(out CharacterMovement player) && this.TryGetComponent(out IBonused bonus))
+        {
+            Fade();
+        }
+    }
 
+    private void Fade()
+    {
+        Spawner.TakeBack(this.gameObject);
+    }
 }

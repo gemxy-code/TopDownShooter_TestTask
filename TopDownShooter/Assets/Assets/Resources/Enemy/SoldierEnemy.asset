@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533ae66f39a9873479f5f53b6bbaffcb, type: 3}
   m_Name: SoldierEnemy
   m_EditorClassIdentifier: 
+  _prefab: {fileID: 5611785330728334234, guid: 20460751436b81a41af0df1e8ac40539, type: 3}
   _health: 10
   _speed: 3
   _score: 7
   _spawnChance: 60
+  Weight: 60

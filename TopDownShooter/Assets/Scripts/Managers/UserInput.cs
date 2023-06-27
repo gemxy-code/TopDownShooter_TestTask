@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class UserInput : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnMouseClicked;
+    public static event Action <Vector3> OnMouseClicked;
+    [SerializeField] private Camera _camera;
 
     private float _moveVertical;
     public float MoveVertical { get => _moveVertical; }
@@ -18,7 +19,7 @@ public class UserInput : MonoBehaviour
 
         if(Input.GetMouseButton(0))
         {
-            OnMouseClicked.Invoke();
+            OnMouseClicked?.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 }

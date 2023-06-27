@@ -7,10 +7,12 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private UserInput _input;
 
     private float _speed;
+    private float _halfSize;
 
     private void Awake()
     {
         _speed = _defaultSpeed;
+        _halfSize = transform.localScale.x / 2;
     }
 
     private void OnEnable()
@@ -30,8 +32,8 @@ public class CharacterMovement : MonoBehaviour
         if(_input.MoveHorizontal != 0 || _input.MoveVertical != 0)
         {
             Vector3 newPosition = transform.position + ((Vector3.right * _input.MoveHorizontal) + (Vector3.forward * _input.MoveVertical)) * _speed * Time.deltaTime;
-            newPosition.x = Mathf.Clamp(newPosition.x, (WorldLimit.MapBorders.x - transform.localScale.x / 2) * -1, WorldLimit.MapBorders.x - transform.localScale.x / 2);
-            newPosition.z = Mathf.Clamp(newPosition.z, (WorldLimit.MapBorders.z - transform.localScale.z / 2) * -1, WorldLimit.MapBorders.z - transform.localScale.z / 2);
+            newPosition.x = Mathf.Clamp(newPosition.x, (WorldLimit.MapBorders.x - _halfSize) * -1, WorldLimit.MapBorders.x - _halfSize);
+            newPosition.z = Mathf.Clamp(newPosition.z, (WorldLimit.MapBorders.z - _halfSize) * -1, WorldLimit.MapBorders.z - _halfSize);
             transform.position = newPosition;
         }       
     }
@@ -41,9 +43,9 @@ public class CharacterMovement : MonoBehaviour
         _speed *= value;
     }
 
-    private void SpeedFallHandler()
+    private void SpeedFallHandler(float value)
     {
-        _speed = _defaultSpeed;
+        _speed /= value;
     }
 
 }

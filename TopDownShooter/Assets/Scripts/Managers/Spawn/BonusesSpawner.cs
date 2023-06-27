@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class BonusesSpawner : Spawner
 {
-    protected override Vector3 CalculatePosition()
+    protected override void StartOptions()
     {
-        //For spawn Test !!!
-        return Vector3.zero;
-    }
 
+    }
 }

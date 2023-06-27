@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour, IShootable
+public class Shotgun :  Gun
 {
-    public void Shoot()
+    public override void Shoot(Vector3 target)
     {
-        Debug.Log("я стрел€ю из дробовика");
     }
 }
