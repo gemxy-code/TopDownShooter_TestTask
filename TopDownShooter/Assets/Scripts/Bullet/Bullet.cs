@@ -7,13 +7,14 @@ public class Bullet : MonoBehaviour
 
     private GunData _gunData;
     private Vector3 _target;
-    private Vector3 _startPoint;
+    private Transform _startPoint;
 
-    public void Init(GunData data, Vector3 startPoint, Vector3 target)
+    public void Init(GunData data, Transform startPoint, Vector3 target)
     {
         _gunData = data;
         _startPoint = startPoint;
-        transform.position = _startPoint;
+        transform.position = _startPoint.position;
+        transform.rotation = _startPoint.rotation;
         _target = target;
 
         gameObject.SetActive(true);
@@ -28,7 +29,7 @@ public class Bullet : MonoBehaviour
                 enemy.GetComponent<TakeDamage>().TakedDamage(_gunData.Damage);
             PoolManager.Instance.ReturnObject(this.gameObject);
         }
-        else if ((_gunData.IsLimitedLife && Vector3.Distance(_startPoint, transform.position) >= _gunData.TimeLife)||(transform.position.x > WorldLimit.MapBorders.x || transform.position.x < -WorldLimit.MapBorders.x || transform.position.z > WorldLimit.MapBorders.z || transform.position.z < -WorldLimit.MapBorders.z))
+        else if ((_gunData.IsLimitedLife && Vector3.Distance(_startPoint.position, transform.position) >= _gunData.TimeLife)||(transform.position.x > WorldLimit.MapBorders.x || transform.position.x < -WorldLimit.MapBorders.x || transform.position.z > WorldLimit.MapBorders.z || transform.position.z < -WorldLimit.MapBorders.z))
         {
             PoolManager.Instance.ReturnObject(this.gameObject);
         }

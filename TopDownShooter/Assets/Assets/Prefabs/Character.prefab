@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunPosition: {fileID: 4522832626914009875}
+  _speedRotate: 180
 --- !u!114 &5504159640899032863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 985178641035121103, guid: 635642f3e2287f34c9b7516ae7ca2847, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 48a1aad469e4236479f12e3260888bda, type: 2}
+      objectReference: {fileID: 2100000, guid: c1f3f9f0176ee9e4789391a8017495c4, type: 2}
     - target: {fileID: 3438164206287235068, guid: 635642f3e2287f34c9b7516ae7ca2847, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -274,7 +275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6984106866864517031, guid: 635642f3e2287f34c9b7516ae7ca2847, type: 3}
       propertyPath: m_Name
-      value: InvulnerabilityBonus
+      value: Aura
       objectReference: {fileID: 0}
     - target: {fileID: 6984106866864517031, guid: 635642f3e2287f34c9b7516ae7ca2847, type: 3}
       propertyPath: m_IsActive

@@ -28,7 +28,7 @@ public class Gun : MonoBehaviour
     {
         IsCanShoot = false;
         GameObject newBullet = PoolManager.Instance.RentObject(_bullet);
-        newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition.position, target);
+        newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition, target);
         yield return new WaitForSeconds(_timeToNextShoot);
         IsCanShoot = true;
     }

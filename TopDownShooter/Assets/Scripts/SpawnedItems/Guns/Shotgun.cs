@@ -28,7 +28,7 @@ public class Shotgun :  Gun
         for(int i = 0; i < _bulletCount; i++)
         {
             GameObject newBullet = PoolManager.Instance.RentObject(_bullet);
-            newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition.position, target);
+            newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition, target);
             newBullet.transform.eulerAngles = new Vector3(0, _currentAngle, 0);
             _currentAngle += _angleBetweenBullets;                 
         }
