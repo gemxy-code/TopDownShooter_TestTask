@@ -29,7 +29,8 @@ public class Shotgun :  Gun
         {
             GameObject newBullet = PoolManager.Instance.RentObject(_bullet);
             newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition, target);
-            newBullet.transform.rotation = Quaternion.Euler(0, _currentAngle, 0);
+            newBullet.transform.rotation = _bulletPosition.rotation;
+            newBullet.transform.Rotate(0f, _currentAngle, 0f);
             _currentAngle += _angleBetweenBullets;                 
         }
         yield return new WaitForSeconds(_timeToNextShoot);

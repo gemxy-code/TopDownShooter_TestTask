@@ -23,5 +23,11 @@ public class UserInput : MonoBehaviour
             mousePosition.y = 0f;
             OnMouseClicked?.Invoke(mousePosition);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Vector3 _maxPoints = _camera.ViewportToWorldPoint(new Vector3(1f, 0f, 1f));
+            Debug.Log(new Vector3(WorldLimit.MapBorders.x - _maxPoints.x, _maxPoints.y, WorldLimit.MapBorders.z - _maxPoints.z));
+        }
     }
 }

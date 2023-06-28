@@ -1,11 +1,13 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemiesSpawner : MonoBehaviour
 {
     [SerializeField] private EnemyData[] _enemiesDatas;
     [SerializeField] private Camera _camera;
-    [SerializeField] private float _spawnTimer;
+    [SerializeField] private float _spawnTimer; 
+
 
     private float _minusTime = 0.1f;
     private float _timeForBoostTime = 10f;
@@ -27,6 +29,7 @@ public class EnemiesSpawner : MonoBehaviour
             _spawnTimer -= _minusTime;
             _timeForBoostTime = Time.time;
         }
+
     }
 
     private IEnumerator SpawnedEnemy()
@@ -55,10 +58,40 @@ public class EnemiesSpawner : MonoBehaviour
 
     private Vector3 CalculatePosition()
     {
-        //Change this method with    Camera.main.ViewportToWorldPoint(1.1f, 1f, 1.1f); max and 0 min potitions on screen with distance > 1 and WorldLimit
+        Vector3 _maxScreenPoints =  _camera.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+        Vector3 _minScreenPoints = _camera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+        Vector3 newPosition;
 
-        return new Vector3(_camera.transform.position.x, 0.5f, _camera.transform.position.z)  + new Vector3(Random.Range(WorldLimit.MapBorders.x * -1, WorldLimit.MapBorders.x), 0.5f, Random.Range(WorldLimit.MapBorders.z * -1, WorldLimit.MapBorders.z));
+
+        int randomSide = Random.Range(0,4);
+        
+
+        switch (randomSide)
+        {
+            case 0:
+                //BottomSide Position
+                newPosition = new Vector3(Random.Range(-WorldLimit.MapBorders.x, WorldLimit.MapBorders.x), 0.5f, _minScreenPoints.z);
+                break;
+            case 1:
+                //LeftSide Position
+                newPosition = new Vector3(_minScreenPoints.x, 0.5f, Random.Range(-WorldLimit.MapBorders.z, WorldLimit.MapBorders.z));
+                break;
+            case 2:
+                //TopSide Position
+                newPosition = new Vector3(Random.Range(-WorldLimit.MapBorders.x, WorldLimit.MapBorders.x), 0.5f, _maxScreenPoints.z);
+                break;
+            case 3:
+                //RightSide Position
+                newPosition = new Vector3(_maxScreenPoints.x, 0.5f, Random.Range(-WorldLimit.MapBorders.z, WorldLimit.MapBorders.z));
+                break;
+            default:
+                newPosition = new Vector3(_minScreenPoints.z, 0.5f, Random.Range(-WorldLimit.MapBorders.z, WorldLimit.MapBorders.z));
+                break;
+        }
+        Debug.Log(newPosition);
+        return newPosition;
     }
+
 
     private void CalculateWeight()
     {

@@ -6,14 +6,22 @@ public class GameOverMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText;
 
-    private int _record;
-    private string _mainMenuScene = "MainMenu";
-    
-    
-
-    private void OpenMenuWindow(int score)
+    private void OnEnable()
     {
-        gameObject.SetActive(true);
+        ScoreManager.OnScoreSended += DownloadScore;
+    }
+
+    private void OnDisable()
+    {
+        ScoreManager.OnScoreSended -=  DownloadScore;
+    }
+
+    private int _record;
+    private string _mainMenuScene = "MainMenu";   
+
+
+    private void DownloadScore(int score)
+    {
         if (PlayerPrefs.HasKey("Record"))
         {
             _record = PlayerPrefs.GetInt("Record");
@@ -38,10 +46,9 @@ public class GameOverMenu : MonoBehaviour
         SceneManager.LoadScene(_mainMenuScene);
     }
 
-    public void ReloadScene()
+    public void RestartScene()
     {
-        gameObject.SetActive(false);
-        //...
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }

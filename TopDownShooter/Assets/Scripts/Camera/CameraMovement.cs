@@ -5,7 +5,12 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private CharacterMovement _target;
     [SerializeField] private Camera _camera;
 
-    private Vector3 _offset = new(0f, 2f, 0f);
+    [SerializeField] Vector3 _offset;
+
+    private void Awake()
+    {
+        _offset = transform.position;
+    }
 
     private void LateUpdate()
     {
