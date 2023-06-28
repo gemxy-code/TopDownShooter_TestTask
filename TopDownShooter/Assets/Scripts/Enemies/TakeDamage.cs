@@ -6,7 +6,7 @@ public class TakeDamage : MonoBehaviour
 
     private float _health;
 
-    private void Awake()
+    public void Spawned()
     {
         _health = _enemyData.Health;
     }

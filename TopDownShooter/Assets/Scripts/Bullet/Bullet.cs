@@ -25,13 +25,21 @@ public class Bullet : MonoBehaviour
         if (_gunData.IsGrenade && transform.position == _target)
         {
             Collider[] collisions = Physics.OverlapSphere(transform.position, _gunData.ExplosionRadius);
-            foreach (Collider enemy in collisions)
-                enemy.GetComponent<TakeDamage>().TakedDamage(_gunData.Damage);
+            foreach (Collider Object in collisions)
+                if(Object.TryGetComponent(out TakeDamage enemy))
+                {
+                    enemy.TakedDamage(_gunData.Damage);
+                }
             PoolManager.Instance.ReturnObject(this.gameObject);
         }
         else if ((_gunData.IsLimitedLife && Vector3.Distance(_startPoint.position, transform.position) >= _gunData.TimeLife)||(transform.position.x > WorldLimit.MapBorders.x || transform.position.x < -WorldLimit.MapBorders.x || transform.position.z > WorldLimit.MapBorders.z || transform.position.z < -WorldLimit.MapBorders.z))
         {
             PoolManager.Instance.ReturnObject(this.gameObject);
+        }
+        else if(_gunData.IsGrenade)
+        {
+            transform.LookAt(_target);
+            transform.Translate(Vector3.forward * Time.deltaTime * _speed);
         }
         else
         {

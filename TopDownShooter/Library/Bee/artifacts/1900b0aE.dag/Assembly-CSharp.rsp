@@ -390,6 +390,7 @@
 "Assets/Scripts/SpawnedItems/Guns/Shotgun.cs"
 "Assets/Scripts/UI/BackToMainMenu.cs"
 "Assets/Scripts/UI/GameOverMenu.cs"
+"Assets/Scripts/UI/HideVisibleMenu.cs"
 "Assets/Scripts/UI/MainMenu.cs"
 "Assets/Scripts/Zones/DeathZone.cs"
 "Assets/Scripts/Zones/SlowZone.cs"

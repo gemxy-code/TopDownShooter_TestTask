@@ -24,12 +24,13 @@ public class TakedGun : MonoBehaviour
     {
         if (other.TryGetComponent(out Gun takedGun))
         {
+            EventBus.SendGunTaked(other.gameObject);
+            TakeGun(takedGun);
             other.gameObject.transform.SetParent(_gunPosition);
             other.transform.position  = _gunPosition.position; 
             other.transform.rotation = _gunPosition.rotation;
-            EventBus.SendGunTaked(other.gameObject);
-            takedGun.IsCanShoot = true;
-            TakeGun(takedGun);            
+            
+            takedGun.IsCanShoot = true;        
         }
     }
 
@@ -48,18 +49,17 @@ public class TakedGun : MonoBehaviour
         StartCoroutine(nameof(RotateAndShoot), targetPosition);
     }
 
-    private IEnumerator RotateAndShoot(Vector3 target)
+
+    private IEnumerator RotateAndShoot(Vector3 targetPosition)
     {
         _isRotate = true;
-        Vector3 direction = (target - transform.forward).normalized;
-        while(transform.forward != direction)
-        {
-            transform.Rotate(Vector3.up * _speedRotate * Time.deltaTime);
-            yield return null;
-        }
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        direction.y = 0f;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), _speedRotate * Time.deltaTime);
+        yield return null;
         if (_currentGun != null)
         {
-            _currentGun.Shoot(target);
+            _currentGun.Shoot(targetPosition);
         }
         _isRotate = false;    
     }

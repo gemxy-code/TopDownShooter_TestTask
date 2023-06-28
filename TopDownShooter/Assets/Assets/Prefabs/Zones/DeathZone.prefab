@@ -110,5 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e09ded9966c574dbd4e4ec94c5c007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _zonesMask:
+    serializedVersion: 2
+    m_Bits: 64
   _radius: 1
   _countOnMap: 2

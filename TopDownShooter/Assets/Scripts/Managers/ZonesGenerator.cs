@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ZonesGenerator : MonoBehaviour
@@ -25,7 +22,7 @@ public class ZonesGenerator : MonoBehaviour
             while(zone.CountOnMap > count)
             {
                 Vector3 _point = GeneratePoint();
-                if (Physics.OverlapSphere(_point,  zone.Radius + _distanceBetweenZones, _zonesLayer).Length == 0)
+                if (Physics.OverlapSphere(_point,  zone.Radius + _distanceBetweenZones, zone.ZonesMask.value).Length == 0)
                 {
                     Instantiate(zone.gameObject, _point, Quaternion.identity);
                     count ++;
@@ -37,7 +34,4 @@ public class ZonesGenerator : MonoBehaviour
     {
         return new Vector3(Random.Range(_borders.x * -1, _borders.x), _borders.y, Random.Range(_borders.z * -1, _borders.z));
     }
-
-
-
 }

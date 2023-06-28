@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class EventBus : MonoBehaviour
 {
+    //Enable/Disable speed Power up
     public static event Action <float> OnSpeedBoosted;
     public static event Action <float> OnSpeedFalled;
 
+    //Enable/Disable invulnerability Power up
     public static event Action OnInvulnerabilityEnabled;
     public static event Action OnInvulnerabilityDisabled;
 
-    public static event Action <float> OnDamageTaked;
     public static event Action <int> OnEnemyDied;
 
     public static event Action <GameObject> OnGunTaked;
@@ -35,10 +36,6 @@ public class EventBus : MonoBehaviour
     {
         OnInvulnerabilityDisabled?.Invoke();
     }
-    public static void SendDamageTaked(float value)
-    {
-        OnDamageTaked?.Invoke(value);
-    }
 
     public static void SendEnemyDied(int score)
     {
@@ -50,10 +47,8 @@ public class EventBus : MonoBehaviour
         OnGunTaked?.Invoke(gun);
     }
 
-
-    public static void GameOver()
+    public static void SendGameOver()
     {
-        //...
+        OnGameOver?.Invoke();
     }
-
 }

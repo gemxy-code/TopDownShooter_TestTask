@@ -22,7 +22,7 @@ public class EnemyTuch : MonoBehaviour
         {
             if(!_isInvulnerability)
             {
-                EventBus.GameOver();
+                EventBus.SendGameOver();
             }
         }
     }

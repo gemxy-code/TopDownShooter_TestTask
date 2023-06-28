@@ -2,6 +2,9 @@ using UnityEngine;
 
 public abstract class Zone : MonoBehaviour
 {
+    [SerializeField] private LayerMask _zonesMask;
+    public LayerMask ZonesMask { get => _zonesMask; }
+
     [SerializeField] private float _radius;
     public float Radius { get => _radius; }
 
