@@ -4,11 +4,11 @@ using UnityEngine;
 public class FadeAway : MonoBehaviour
 {
     [SerializeField] private float _timer = 5f;
+    private void OnEnable() => EventBus.OnGameOver += GameOverStopSpawn;
+    private void OnDisable() => EventBus.OnGameOver -= GameOverStopSpawn;
+    private void GameOverStopSpawn() => StopAllCoroutines();
 
-    public void Start()
-    {
-        StartCoroutine(nameof(TimerFadeAway));
-    }
+    public void Start() => StartCoroutine(nameof(TimerFadeAway));
 
     private IEnumerator TimerFadeAway()
     {
@@ -25,8 +25,5 @@ public class FadeAway : MonoBehaviour
         }
     }
 
-    private void Fade()
-    {
-        Spawner.TakeBack(this.gameObject);
-    }
+    private void Fade() => Spawner.TakeBack(gameObject);
 }

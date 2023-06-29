@@ -4,7 +4,6 @@ public class ZonesGenerator : MonoBehaviour
 {
     [SerializeField] private Zone[] _zones;
     [SerializeField] private float _distanceBetweenZones;
-    [SerializeField] private int _zonesLayer;
 
     private Vector3 _borders;
 
@@ -22,7 +21,7 @@ public class ZonesGenerator : MonoBehaviour
             while(zone.CountOnMap > count)
             {
                 Vector3 _point = GeneratePoint();
-                if (Physics.OverlapSphere(_point,  zone.Radius + _distanceBetweenZones, zone.ZonesMask.value).Length == 0)
+                if (Physics.OverlapSphere(_point, zone.Radius + _distanceBetweenZones, zone.ZonesMask.value).Length == 0)
                 {
                     Instantiate(zone.gameObject, _point, Quaternion.identity);
                     count ++;

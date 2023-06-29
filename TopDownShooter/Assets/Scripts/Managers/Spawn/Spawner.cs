@@ -5,12 +5,14 @@ public abstract class Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] _objects;
     [SerializeField] protected float _timerSpawn;
+
     [SerializeField] private Camera _camera;
 
     private float _cameraMaxBorder = 0.9f;
     private float _cameraMinBorder = 0f;
 
     protected List<GameObject> _spawnedObjects;
+
     public virtual void Awake()
     {
         Init();
@@ -48,5 +50,4 @@ public abstract class Spawner : MonoBehaviour
     }
 
     public static void TakeBack(GameObject Object) => Object.SetActive(false);
-
 }

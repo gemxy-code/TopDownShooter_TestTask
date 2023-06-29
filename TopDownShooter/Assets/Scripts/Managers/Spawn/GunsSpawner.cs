@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GunsSpawner : Spawner
 {
-    private GameObject _currentGun;
+    private GameObject _currentGun = null;
 
     private void OnEnable()
     {
@@ -13,18 +13,6 @@ public class GunsSpawner : Spawner
     {
         EventBus.OnGunTaked -= SetGun;
         EventBus.OnGameOver -= GameOverStopSpawn;
-    }
-
-
-    public override void Awake()
-    {
-        base.Awake();
-        StartOptions();
-    }
-
-    protected void StartOptions()
-    {
-        _currentGun = null;
     }
 
     private void SetGun(GameObject gun)
@@ -38,7 +26,6 @@ public class GunsSpawner : Spawner
         _spawnedObjects.Remove(gun);
         _currentGun = gun;
     }
-
 
     private void GameOverStopSpawn()
     {

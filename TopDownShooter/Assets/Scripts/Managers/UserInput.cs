@@ -10,20 +10,12 @@ public class UserInput : MonoBehaviour
     private float _moveHorizontal;
     public float MoveHorizontal { get => _moveHorizontal; }
 
-    private void OnEnable()
-    {
-        EventBus.OnGameOver += GameOverStopGame;
-    }
-    private void OnDisable()
-    {
-        EventBus.OnGameOver -= GameOverStopGame;
-    }
-
+    private void OnEnable() => EventBus.OnGameOver += GameOverStopGame;
+    private void OnDisable() => EventBus.OnGameOver -= GameOverStopGame;
     private void Awake()
     {
         _isStopGame = false;
     }
-
     private void LateUpdate()
     {
         if(!_isStopGame)

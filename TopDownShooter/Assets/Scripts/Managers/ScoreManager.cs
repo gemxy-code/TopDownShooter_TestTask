@@ -32,8 +32,5 @@ public class ScoreManager : MonoBehaviour
         _scoreText.text = _score.ToString();
     }
 
-    private void SendScore()
-    {
-        OnScoreSended?.Invoke(_score);
-    }
+    private void SendScore() => OnScoreSended?.Invoke(_score);
 }

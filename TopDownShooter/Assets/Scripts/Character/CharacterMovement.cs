@@ -29,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
     {        
         if(_input.MoveHorizontal != 0 || _input.MoveVertical != 0)
         {
-            Vector3 newPosition = transform.position + ((Vector3.right * _input.MoveHorizontal) + (Vector3.forward * _input.MoveVertical)) * _speed * Time.deltaTime;
+            Vector3 newPosition = transform.position + _speed * Time.deltaTime * ((Vector3.right * _input.MoveHorizontal) + (Vector3.forward * _input.MoveVertical));
             newPosition.x = Mathf.Clamp(newPosition.x, (MainGameManager.MapBorders.x - _halfSize) * -1, MainGameManager.MapBorders.x - _halfSize);
             newPosition.z = Mathf.Clamp(newPosition.z, (MainGameManager.MapBorders.z - _halfSize) * -1, MainGameManager.MapBorders.z - _halfSize);
             transform.position = newPosition;
@@ -45,5 +45,4 @@ public class CharacterMovement : MonoBehaviour
     {
         _speed /= value;
     }
-
 }

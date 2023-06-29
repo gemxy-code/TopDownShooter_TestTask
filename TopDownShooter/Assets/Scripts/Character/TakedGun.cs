@@ -26,8 +26,7 @@ public class TakedGun : MonoBehaviour
             EventBus.SendGunTaked(other.gameObject);
             TakeGun(takedGun);
             other.gameObject.transform.SetParent(_gunPosition);
-            other.transform.position  = _gunPosition.position; 
-            other.transform.rotation = _gunPosition.rotation;
+            other.transform.SetPositionAndRotation(_gunPosition.position, _gunPosition.rotation);
             
             takedGun.IsCanShoot = true;        
         }

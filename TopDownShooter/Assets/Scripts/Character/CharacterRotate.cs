@@ -18,7 +18,6 @@ public class CharacterRotate : MonoBehaviour
         EventBus.OnGameOver -= GameOverStopGame;
     }
 
-
     void Update()
     {
         if (!_isStopGame && Input.GetMouseButton(0))

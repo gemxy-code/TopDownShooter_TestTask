@@ -28,6 +28,7 @@ public class Gun : MonoBehaviour
     {
         IsCanShoot = false;
         GameObject newBullet = PoolManager.Instance.RentObject(_bullet);
+        newBullet.transform.rotation = _bulletPosition.rotation;
         newBullet.GetComponent<Bullet>().Init(_gunData, _bulletPosition, target);
         yield return new WaitForSeconds(_timeToNextShoot);
         IsCanShoot = true;

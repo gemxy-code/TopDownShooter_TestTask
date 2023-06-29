@@ -8,8 +8,7 @@ public class EventBus : MonoBehaviour
     public static event Action <float> OnSpeedFalled;
 
     //Enable/Disable invulnerability Power up
-    public static event Action OnInvulnerabilityEnabled;
-    public static event Action OnInvulnerabilityDisabled;
+    public static event Action OnInvulnerabilityChange;
 
     public static event Action <int> OnEnemyDied;
 
@@ -27,14 +26,9 @@ public class EventBus : MonoBehaviour
         OnSpeedFalled?.Invoke(value);
     }
 
-    public static void SendInvulnerabilityEnabled()
+    public static void SendInvulnerabilityChange()
     {
-        OnInvulnerabilityEnabled?.Invoke();
-    }
-
-    public static void SendInvulnerabilityDisabled()
-    {
-        OnInvulnerabilityDisabled?.Invoke();
+        OnInvulnerabilityChange?.Invoke();
     }
 
     public static void SendEnemyDied(int score)

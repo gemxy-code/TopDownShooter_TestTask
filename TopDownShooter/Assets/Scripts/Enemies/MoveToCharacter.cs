@@ -27,7 +27,7 @@ public class MoveToCharacter : MonoBehaviour
         if (!_isStopGame)
         {
             Vector3 direction = (_target.transform.position - transform.position).normalized;
-            transform.Translate(direction * _enemyData.Speed * Time.deltaTime);
+            transform.Translate(_enemyData.Speed * Time.deltaTime * direction);
         }
     }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float _speed = 15;
+    [SerializeField] private float _speed = 20;
 
     private GunData _gunData;
     private Vector3 _target;
@@ -14,21 +14,14 @@ public class Bullet : MonoBehaviour
         _isStopGame = false;
     }
 
-    private void OnEnable()
-    {
-        EventBus.OnGameOver += GameOverStopGame;
-    }
-    private void OnDisable()
-    {
-        EventBus.OnGameOver -= GameOverStopGame;
-    }
+    private void OnEnable() => EventBus.OnGameOver += GameOverStopGame;
+    private void OnDisable() => EventBus.OnGameOver -= GameOverStopGame;
 
     public void Init(GunData data, Transform startPoint, Vector3 target)
     {
         _gunData = data;
         _startPoint = startPoint;
         transform.position = _startPoint.position;
-        transform.rotation = _startPoint.rotation;
         _target = target;
 
         gameObject.SetActive(true);
@@ -55,11 +48,11 @@ public class Bullet : MonoBehaviour
             else if (_gunData.IsGrenade)
             {
                 transform.LookAt(_target);
-                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+                transform.Translate(_speed * Time.deltaTime * Vector3.forward);
             }
             else
             {
-                transform.Translate(Vector3.forward * Time.deltaTime * _speed);
+                transform.Translate(_speed * Time.deltaTime * Vector3.forward);
             }
         }
     }

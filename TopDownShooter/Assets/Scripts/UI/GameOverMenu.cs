@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameOverMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText;
+    private int _record;
 
     private void OnEnable()
     {
@@ -16,10 +17,6 @@ public class GameOverMenu : MonoBehaviour
         ScoreManager.OnScoreSended -=  DownloadScore;
     }
 
-    private int _record;
-    private string _mainMenuScene = "MainMenu";   
-
-
     private void DownloadScore(int score)
     {
         if (PlayerPrefs.HasKey("Record"))
@@ -30,7 +27,7 @@ public class GameOverMenu : MonoBehaviour
         {
             _record = 0;
         }
-        if (score >  _record) 
+        if (score > _record) 
         {
             _scoreText.text = "Новый рекорд: " + score;
             PlayerPrefs.SetInt("Record", score);
@@ -43,12 +40,11 @@ public class GameOverMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene(_mainMenuScene);
+        SceneManager.LoadScene(MainGameManager.MainMenuScene);
     }
 
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
 }

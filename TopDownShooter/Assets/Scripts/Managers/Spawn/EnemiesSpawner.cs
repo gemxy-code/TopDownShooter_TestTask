@@ -4,14 +4,14 @@ using UnityEngine;
 public class EnemiesSpawner : MonoBehaviour
 {
     [SerializeField] private EnemyData[] _enemiesDatas;
-    [SerializeField] private Camera _camera;
     [SerializeField] private float _spawnTimer; 
 
-    private float _minusTime = 0.1f;
-    private float _timeForBoostTime = 10f;
+    private readonly float _minusTime = 0.1f;
+    private readonly float _timeForBoostTime = 10f;
+    private float _timer;
 
     private float _allChances = 0;
-    private System.Random _rand = new System.Random();
+    private readonly System.Random _rand = new System.Random();
 
     private void OnEnable()
     {
@@ -24,17 +24,21 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void Awake()
     {
-        _timeForBoostTime = Time.time;
+        _timer = 0f;
         CalculateWeight();
-        StartCoroutine(nameof(SpawnedEnemy));
+        StartCoroutine(SpawnedEnemy());
     }
 
     private void Update()
     {
-        if(Time.time - _timeForBoostTime >= 10f && _spawnTimer > 0.5f)
+        if (_spawnTimer > 0.5f)
         {
-            _spawnTimer -= _minusTime;
-            _timeForBoostTime = Time.time;
+            _timer += Time.deltaTime;
+            if (_timer >= _timeForBoostTime)
+            {
+                _spawnTimer -= _minusTime;
+                _timer = 0f;
+            }
         }
     }
 
@@ -49,53 +53,76 @@ public class EnemiesSpawner : MonoBehaviour
 
     private void ChooseRandomEnemy()
     {
-        double random = _rand.NextDouble();
-        for(int i = 0; i < _enemiesDatas.Length; i++)
+        int index = TakeIndexRandomEnemy();
+        GameObject enemy = PoolManager.Instance.RentObject(_enemiesDatas[index].Prefab);
+        enemy.transform.position = CalculatePosition();
+        enemy.GetComponent<TakeDamage>().Spawned();
+        enemy.SetActive(true);
+        Debug.Log(_timer);
+    }
+
+    private int TakeIndexRandomEnemy()
+    {
+        double random = _rand.NextDouble() * _allChances;
+        for (int i = 0; i < _enemiesDatas.Length; i++)
         {
-            if (random >= _enemiesDatas[i].Weight/_allChances)
+            if (_enemiesDatas[i].Weight >= random)
             {
-                GameObject enemy = PoolManager.Instance.RentObject(_enemiesDatas[i].Prefab);
-                enemy.transform.position = CalculatePosition();
-                enemy.GetComponent<TakeDamage>().Spawned();
-                enemy.SetActive(true);
+                return i;
             }
         }
+        return 0;
     }
 
     private Vector3 CalculatePosition()
     {
-
-        //Move to MainGameManager
-        Vector3 _maxScreenPoints =  _camera.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
-        Vector3 _minScreenPoints = _camera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
-        Vector3 newPosition;
-        int randomSide = Random.Range(0, 4);
-
-        switch (randomSide)
+        Vector3 newPosition = Vector3.zero;
+        bool _isCanSpawn = false;
+        while(!_isCanSpawn)
         {
-            case 0:
+            int randomSide = Random.Range(0, 4);
+            switch (randomSide)
+            {
                 //BottomSide Position
-                newPosition = new Vector3(Random.Range(-MainGameManager.MapBorders.x, MainGameManager.MapBorders.x), 0.5f, _minScreenPoints.z);
-                break;
-            case 1:
+                case 0:
+                    if(((MainGameManager.MapBorders.z * -1) - MainGameManager.MinScreenPoints.y) < 0)
+                    {
+                        newPosition = new Vector3(Random.Range(-MainGameManager.MapBorders.x, MainGameManager.MapBorders.x), 0.5f, MainGameManager.MinScreenPoints.y);
+                        _isCanSpawn = true;
+                    }                   
+                    break;
                 //LeftSide Position
-                newPosition = new Vector3(_minScreenPoints.x, 0.5f, Random.Range(-MainGameManager.MapBorders.z, MainGameManager.MapBorders.z));
-                break;
-            case 2:
+                case 1:
+                    if (((MainGameManager.MapBorders.x * -1) - MainGameManager.MinScreenPoints.x) < 0)
+                    {
+                        newPosition = new Vector3(MainGameManager.MinScreenPoints.x, 0.5f, Random.Range(-MainGameManager.MapBorders.z, MainGameManager.MapBorders.z));
+                        _isCanSpawn = true;
+                    }
+                    break;
                 //TopSide Position
-                newPosition = new Vector3(Random.Range(-MainGameManager.MapBorders.x, MainGameManager.MapBorders.x), 0.5f, _maxScreenPoints.z);
-                break;
-            case 3:
+                case 2:
+                    if ((MainGameManager.MapBorders.z - MainGameManager.MaxScreenPoints.y) > 0)
+                    {
+
+                        newPosition = new Vector3(Random.Range(-MainGameManager.MapBorders.x, MainGameManager.MapBorders.x), 0.5f, MainGameManager.MaxScreenPoints.y);
+                        _isCanSpawn = true;
+                    }
+                    break;
                 //RightSide Position
-                newPosition = new Vector3(_maxScreenPoints.x, 0.5f, Random.Range(-MainGameManager.MapBorders.z, MainGameManager.MapBorders.z));
-                break;
-            default:
-                newPosition = new Vector3(_minScreenPoints.z, 0.5f, Random.Range(-MainGameManager.MapBorders.z, MainGameManager.MapBorders.z));
-                break;
-        }
+                case 3:
+                default:
+                    if ((MainGameManager.MapBorders.x - MainGameManager.MaxScreenPoints.x) > 0)
+                    {
+
+                        newPosition = new Vector3(MainGameManager.MaxScreenPoints.x, 0.5f, Random.Range(-MainGameManager.MapBorders.z, MainGameManager.MapBorders.z));
+                        _isCanSpawn = true;
+                    }
+                    break;
+            }
+        }            
         return newPosition;
     }
-
+    
     private void CalculateWeight()
     {
         for (int i = 0; i < _enemiesDatas.Length; i++)

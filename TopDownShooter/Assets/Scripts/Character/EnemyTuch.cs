@@ -6,14 +6,12 @@ public class EnemyTuch : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.OnInvulnerabilityEnabled += EnableInvulnerability;
-        EventBus.OnInvulnerabilityDisabled += DisableInvulnerability;
+        EventBus.OnInvulnerabilityChange += ChangeInvulnerability;
     }
 
     private void OnDisable()
     {
-        EventBus.OnInvulnerabilityEnabled -= EnableInvulnerability;
-        EventBus.OnInvulnerabilityDisabled -= DisableInvulnerability;
+        EventBus.OnInvulnerabilityChange -= ChangeInvulnerability;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,8 +25,6 @@ public class EnemyTuch : MonoBehaviour
         }
     }
 
-    private void EnableInvulnerability() => _isInvulnerability = true;
-
-    private void DisableInvulnerability() => _isInvulnerability = false;
+    private void ChangeInvulnerability() => _isInvulnerability = !_isInvulnerability;
 
 }

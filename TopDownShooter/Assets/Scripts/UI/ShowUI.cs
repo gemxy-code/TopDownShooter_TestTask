@@ -13,7 +13,6 @@ public class ShowUI : MonoBehaviour
         EventBus.OnGameOver -= Show;
     }
 
-
     private void Show()
     {
         if (gameObject.TryGetComponent(out Canvas canvas))
