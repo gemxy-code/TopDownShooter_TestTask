@@ -1,9 +1,16 @@
-using UnityEngine;
-
 public class BonusesSpawner : Spawner
 {
-    protected override void StartOptions()
+    private void OnEnable()
     {
+        EventBus.OnGameOver += GameOverStopSpawn;
+    }
+    private void OnDisable()
+    {
+        EventBus.OnGameOver -= GameOverStopSpawn;
+    }
 
+    private void GameOverStopSpawn()
+    {
+        CancelInvoke();
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,15 +10,11 @@ public abstract class Spawner : MonoBehaviour
     private float _cameraMaxBorder = 0.9f;
     private float _cameraMinBorder = 0f;
 
-    public List<GameObject> _spawnedObjects;
-
-    protected abstract void StartOptions();
-
-    private void Awake()
+    protected List<GameObject> _spawnedObjects;
+    public virtual void Awake()
     {
         Init();
-        StartCoroutine(Spawn());
-        StartOptions();
+        InvokeRepeating(nameof(Spawn), _timerSpawn, _timerSpawn);
     }
      
     private void Init()
@@ -36,16 +31,12 @@ public abstract class Spawner : MonoBehaviour
 
     protected int RandomSpawn() => Random.Range(0, _spawnedObjects.Count);
 
-    protected IEnumerator Spawn()
+    protected void Spawn()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(_timerSpawn);
-            GameObject _spawnObject = _spawnedObjects[RandomSpawn()];
-            _spawnObject.transform.position = CalculatePosition();
-            _spawnObject.SetActive(true);
-            _spawnObject.GetComponent<FadeAway>().Start();
-        }
+        GameObject _spawnObject = _spawnedObjects[RandomSpawn()];
+        _spawnObject.transform.position = CalculatePosition();
+        _spawnObject.SetActive(true);
+        _spawnObject.GetComponent<FadeAway>().Start();
     }
 
     protected Vector3 CalculatePosition()
@@ -57,4 +48,5 @@ public abstract class Spawner : MonoBehaviour
     }
 
     public static void TakeBack(GameObject Object) => Object.SetActive(false);
+
 }

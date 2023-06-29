@@ -5,16 +5,34 @@ public class MoveToCharacter : MonoBehaviour
     [SerializeField] private EnemyData _enemyData;
 
     private GameObject _target;
+    private bool _isStopGame;
+
+    private void OnEnable()
+    {
+        EventBus.OnGameOver += GameOverStopGame;
+    }
+    private void OnDisable()
+    {
+        EventBus.OnGameOver -= GameOverStopGame;
+    }
 
     private void Awake()
     {
-        //Change method Find to one dependency Inject ? 
-        _target = GameObject.Find("Character");
+        _isStopGame = false;
+        _target = MainGameManager.Character;
     }
 
     private void Update()
     {
-        Vector3 direction = (_target.transform.position - transform.position).normalized;
-        transform.Translate(direction * _enemyData.Speed * Time.deltaTime);
+        if (!_isStopGame)
+        {
+            Vector3 direction = (_target.transform.position - transform.position).normalized;
+            transform.Translate(direction * _enemyData.Speed * Time.deltaTime);
+        }
+    }
+
+    private void GameOverStopGame()
+    {
+        _isStopGame = true;
     }
 }

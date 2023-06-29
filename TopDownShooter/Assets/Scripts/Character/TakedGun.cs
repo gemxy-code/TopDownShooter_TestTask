@@ -1,23 +1,22 @@
-using System.Collections;
 using UnityEngine;
 
 public class TakedGun : MonoBehaviour
 {
     [SerializeField] private Transform _gunPosition;
-    [SerializeField] private float _speedRotate;
 
-    private bool _isRotate;
     private Gun _currentGun;
-
+    private bool _isStopGame;
+    private void Awake()
+    {
+        _isStopGame = false;
+    }
     private void OnEnable()
     {
-        UserInput.OnMouseClicked += TakeShot;
-        _isRotate = false;
-}
-
+        EventBus.OnGameOver += GameOverStopGame;
+    }
     private void OnDisable()
     {
-        UserInput.OnMouseClicked -= TakeShot;
+        EventBus.OnGameOver -= GameOverStopGame;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,33 +33,26 @@ public class TakedGun : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!_isStopGame && Input.GetMouseButton(0))
+        {
+            Vector3 targetPosition = MainGameManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            targetPosition.y = 0.5f;
+            if (_currentGun != null)
+            {
+                _currentGun.Shoot(targetPosition);
+            }
+        }
+    }
+
     private void TakeGun(Gun takedGun)
     {
         _currentGun = takedGun;
     }
 
-    public void TakeShot(Vector3 targetPosition)
+    private void GameOverStopGame()
     {
-        if(_isRotate)
-        {
-            StopCoroutine(nameof(RotateAndShoot));
-            _isRotate = false;
-        }
-        StartCoroutine(nameof(RotateAndShoot), targetPosition);
-    }
-
-
-    private IEnumerator RotateAndShoot(Vector3 targetPosition)
-    {
-        _isRotate = true;
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0f;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), _speedRotate * Time.deltaTime);
-        yield return null;
-        if (_currentGun != null)
-        {
-            _currentGun.Shoot(targetPosition);
-        }
-        _isRotate = false;    
+        _isStopGame = true;
     }
 }

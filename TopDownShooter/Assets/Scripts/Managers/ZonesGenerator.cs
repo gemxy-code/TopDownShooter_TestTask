@@ -17,7 +17,7 @@ public class ZonesGenerator : MonoBehaviour
     {
         foreach (Zone zone in _zones)
         {
-            _borders = new Vector3(WorldLimit.MapBorders.x - zone.Radius - _distanceBetweenZones, 0.5f, WorldLimit.MapBorders.z - zone.Radius - _distanceBetweenZones);
+            _borders = new Vector3(MainGameManager.MapBorders.x - zone.Radius - _distanceBetweenZones, 0.5f, MainGameManager.MapBorders.z - zone.Radius - _distanceBetweenZones);
             int count = 0;
             while(zone.CountOnMap > count)
             {

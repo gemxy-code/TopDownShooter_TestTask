@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnabledBonus : MonoBehaviour
@@ -12,13 +11,12 @@ public class EnabledBonus : MonoBehaviour
         {
             _enabledBonus = bonus;
             _enabledBonus.EnableBonus();
-            StartCoroutine(Rollback());
+            Invoke(nameof(Rollback), _bonusTimer);
         }
     }
 
-    private IEnumerator Rollback()
+    private void Rollback()
     {
-        yield return new WaitForSeconds(_bonusTimer);
         _enabledBonus.DisableBonus();
     }
 }

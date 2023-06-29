@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 848456807952059927}
   - component: {fileID: 848456807952059924}
   - component: {fileID: 848456807952059925}
+  - component: {fileID: 1030662137967559104}
   - component: {fileID: 848456807952059923}
   - component: {fileID: 5504159640899032863}
   - component: {fileID: 1835283885}
@@ -134,6 +135,19 @@ MonoBehaviour:
   _defaultSpeed: 4
   _rotate: 180
   _input: {fileID: 0}
+--- !u!114 &1030662137967559104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848456807952059946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf5e71815834924a84dd2bcafeaf862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedRotate: 180
 --- !u!114 &848456807952059923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +161,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunPosition: {fileID: 4522832626914009875}
-  _speedRotate: 180
 --- !u!114 &5504159640899032863
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,13 +7,22 @@ public class GunsSpawner : Spawner
     private void OnEnable()
     {
         EventBus.OnGunTaked += SetGun;
+        EventBus.OnGameOver += GameOverStopSpawn;
     }
     private void OnDisable()
     {
         EventBus.OnGunTaked -= SetGun;
+        EventBus.OnGameOver -= GameOverStopSpawn;
     }
 
-    protected override void StartOptions()
+
+    public override void Awake()
+    {
+        base.Awake();
+        StartOptions();
+    }
+
+    protected void StartOptions()
     {
         _currentGun = null;
     }
@@ -28,5 +37,11 @@ public class GunsSpawner : Spawner
         }
         _spawnedObjects.Remove(gun);
         _currentGun = gun;
+    }
+
+
+    private void GameOverStopSpawn()
+    {
+        CancelInvoke();
     }
 }

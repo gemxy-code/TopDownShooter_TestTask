@@ -17,7 +17,7 @@ public class TakeDamage : MonoBehaviour
         if(_health <= 0)
         {
             EventBus.SendEnemyDied(_enemyData.Score);
-            PoolManager.Instance.ReturnObject(this.gameObject);
+            PoolManager.Instance.ReturnObject(gameObject);
         }
     }
 }
