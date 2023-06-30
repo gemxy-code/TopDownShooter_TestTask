@@ -25,6 +25,7 @@ public class TakedGun : MonoBehaviour
         {
             EventBus.SendGunTaked(other.gameObject);
             TakeGun(takedGun);
+            other.GetComponent<BoxCollider>().enabled = false;
             other.gameObject.transform.SetParent(_gunPosition);
             other.transform.SetPositionAndRotation(_gunPosition.position, _gunPosition.rotation);
             

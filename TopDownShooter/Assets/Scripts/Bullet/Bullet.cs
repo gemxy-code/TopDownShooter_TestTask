@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (!_isStopGame)
         {
@@ -54,6 +54,7 @@ public class Bullet : MonoBehaviour
             {
                 transform.Translate(_speed * Time.deltaTime * Vector3.forward);
             }
+            transform.Translate(_speed * Time.deltaTime * Vector3.forward);
         }
     }
 

@@ -20,6 +20,7 @@ public class GunsSpawner : Spawner
         if(_currentGun != null)
         {
             _spawnedObjects.Add(_currentGun);
+            _currentGun.GetComponent<BoxCollider>().enabled = true;
             _currentGun.transform.parent = this.transform;
             _currentGun.SetActive(false);
         }
