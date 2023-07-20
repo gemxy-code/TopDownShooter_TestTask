@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (!_isStopGame)
         {
@@ -39,11 +39,11 @@ public class Bullet : MonoBehaviour
                     {
                         enemy.TakedDamage(_gunData.Damage);
                     }
-                PoolManager.Instance.ReturnObject(this.gameObject);
+                PoolManager.Instance.ReturnObject(gameObject);
             }
             else if ((_gunData.IsLimitedLife && Vector3.Distance(_startPoint.position, transform.position) >= _gunData.TimeLife) || (transform.position.x > MainGameManager.MapBorders.x || transform.position.x < -MainGameManager.MapBorders.x || transform.position.z > MainGameManager.MapBorders.z || transform.position.z < -MainGameManager.MapBorders.z))
             {
-                PoolManager.Instance.ReturnObject(this.gameObject);
+                PoolManager.Instance.ReturnObject(gameObject);
             }
             else if (_gunData.IsGrenade)
             {

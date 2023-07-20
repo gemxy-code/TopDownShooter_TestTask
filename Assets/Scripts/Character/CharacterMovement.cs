@@ -27,11 +27,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        Vector3 newPosition = transform.position + _speed * Time.deltaTime * new Vector3(_userInput.MoveDirection.x, 0 , _userInput.MoveDirection.y);
+        Vector3 moveDirection = new Vector3(_userInput.MoveDirection.x, 0, _userInput.MoveDirection.y);
+        Vector3 newPosition = transform.position + (Time.deltaTime * (moveDirection * _speed));
         newPosition.x = Mathf.Clamp(newPosition.x, (MainGameManager.MapBorders.x - _halfSize) * -1, MainGameManager.MapBorders.x - _halfSize);
         newPosition.z = Mathf.Clamp(newPosition.z, (MainGameManager.MapBorders.z - _halfSize) * -1, MainGameManager.MapBorders.z - _halfSize);
         transform.position = newPosition;
-
     }
 
     private void SpeedBoostHandler(float value)

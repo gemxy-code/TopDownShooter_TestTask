@@ -13,7 +13,6 @@ public class EnemyTuch : MonoBehaviour
     {
         EventBus.OnInvulnerabilityChange -= ChangeInvulnerability;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out MoveToCharacter Enemy))

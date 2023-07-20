@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TakedGun : MonoBehaviour
 {
@@ -35,9 +36,9 @@ public class TakedGun : MonoBehaviour
 
     private void Update()
     {
-        if (!_isStopGame && Input.GetMouseButton(0))
+        if (!_isStopGame && Mouse.current.leftButton.ReadValue() > 0)
         {
-            Vector3 targetPosition = MainGameManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 targetPosition = MainGameManager.MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             targetPosition.y = 0.5f;
             if (_currentGun != null)
             {

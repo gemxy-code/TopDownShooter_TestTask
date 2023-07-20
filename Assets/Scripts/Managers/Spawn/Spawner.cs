@@ -16,7 +16,7 @@ public abstract class Spawner : MonoBehaviour
     public virtual void Awake()
     {
         Init();
-        InvokeRepeating(nameof(Spawn), _timerSpawn, _timerSpawn);
+        InvokeRepeating(nameof(Spawn), 0, _timerSpawn);
     }
      
     private void Init()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterRotate : MonoBehaviour
 {
@@ -20,9 +21,9 @@ public class CharacterRotate : MonoBehaviour
 
     void Update()
     {
-        if (!_isStopGame && Input.GetMouseButton(0))
+        if (!_isStopGame && Mouse.current.leftButton.ReadValue() > 0)
         {
-            Vector3 targetPosition = MainGameManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 targetPosition = MainGameManager.MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector3 direction = (targetPosition - transform.position).normalized;
             direction.y = 0f;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), _speedRotate * Time.deltaTime);
